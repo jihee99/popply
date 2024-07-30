@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ex.pop.user.model.AccountRole;
-import com.ex.pop.user.model.AccountState;
-import com.ex.pop.user.model.User;
+import com.ex.popply.user.model.AccountRole;
+import com.ex.popply.user.model.AccountState;
+import com.ex.popply.user.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

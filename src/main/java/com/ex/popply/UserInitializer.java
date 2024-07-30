@@ -5,9 +5,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.ex.pop.auth.repository.UserRepository;
-import com.ex.pop.user.model.AccountState;
-import com.ex.pop.user.model.User;
+import com.ex.popply.auth.repository.UserRepository;
+import com.ex.popply.user.model.AccountState;
+import com.ex.popply.user.model.User;
 
 import lombok.RequiredArgsConstructor;
 

@@ -4,10 +4,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.pop.auth.repository.UserRepository;
-import com.ex.pop.user.model.User;
-import com.ex.pop.user.model.dto.request.SignInRequest;
-import com.ex.pop.user.model.dto.response.SignInResponse;
+import com.ex.popply.auth.repository.UserRepository;
+import com.ex.popply.user.model.User;
+import com.ex.popply.user.model.dto.request.SignInRequest;
+import com.ex.popply.user.model.dto.response.SignInResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

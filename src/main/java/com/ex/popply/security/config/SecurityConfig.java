@@ -9,7 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.ex.pop.security.principal.PrincipalOauth2UserService;
+import com.ex.popply.security.principal.PrincipalOauth2UserService;
 
 @Configuration
 @EnableWebSecurity

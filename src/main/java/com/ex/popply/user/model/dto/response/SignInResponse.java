@@ -1,6 +1,6 @@
 package com.ex.popply.user.model.dto.response;
 
-import com.ex.pop.user.model.AccountRole;
+import com.ex.popply.user.model.AccountRole;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ex.pop.auth.repository.UserRepository;
-import com.ex.pop.user.model.User;
+import com.ex.popply.auth.repository.UserRepository;
+import com.ex.popply.user.model.User;
 
 @Service
 public class PrincipalDetailsService implements UserDetailsService {

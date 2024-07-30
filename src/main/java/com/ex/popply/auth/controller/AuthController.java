@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ex.pop.auth.service.SigninUseCase;
-import com.ex.pop.auth.service.SignupUseCase;
-import com.ex.pop.user.model.dto.request.SignInRequest;
-import com.ex.pop.user.model.dto.request.SignUpRequest;
+import com.ex.popply.auth.service.SigninUseCase;
+import com.ex.popply.auth.service.SignupUseCase;
+import com.ex.popply.user.model.dto.request.SignInRequest;
+import com.ex.popply.user.model.dto.request.SignUpRequest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

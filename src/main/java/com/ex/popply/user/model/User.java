@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.ex.pop.common.model.BaseTimeEntity;
-import com.ex.pop.user.model.dto.request.SignUpRequest;
+import com.ex.popply.common.model.BaseTimeEntity;
+import com.ex.popply.user.model.dto.request.SignUpRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

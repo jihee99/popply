@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ex.pop.user.model.User;
+import com.ex.popply.user.model.User;
 
 public class PrincipalDetails implements UserDetails {
     private User user;

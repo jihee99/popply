@@ -34,7 +34,7 @@ public class AuthController {
 	}
 
 	@Operation(summary = "로그인")
-	@PostMapping("/loginProc")
+	@PostMapping("/login")
 	public ResponseEntity<Void> signIn(@RequestBody SignInRequest request) {
 		signinUseCase.execute(request);
 		return ResponseEntity.ok().build();

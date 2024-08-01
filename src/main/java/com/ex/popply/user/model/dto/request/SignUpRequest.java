@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 public class SignUpRequest {
 
-    @Schema(description = "회원 이메일", example = "user@test.com")
+    @Schema(description = "회원 이메일", example = "test@test.com")
     private final String email;
 
     @Schema(description = "회원 비밀번호", example = "1234")

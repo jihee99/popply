@@ -13,7 +13,7 @@ public class SignUpResponse {
     @Schema(description = "회원 아이디", example = "1")
     private final Long userId;
 
-    @Schema(description = "회원 이메일", example = "user@test.com")
+    @Schema(description = "회원 이메일", example = "test@test.com")
     private final String email;
 
     @Schema(description = "회원 이름", example = "홍길동")

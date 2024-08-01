@@ -1,5 +1,7 @@
 package com.ex.popply.auth.service;
 
+import com.ex.popply.auth.exception.AlreadySignUpUserException;
+import com.ex.popply.auth.exception.PasswordFormatMismatchException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +31,13 @@ public class SignupUseCase {
     private void validateMemberNotExist(String email) {
         if (userRepository.findByEmail(email).isPresent()) {
             log.info("[회원가입 실패] 중복 이메일 회원가입 시도 -> email : " + email);
-//            throw AlreadySignUpUserException.EXCEPTION;
+            throw AlreadySignUpUserException.EXCEPTION;
         }
     }
 
     private void validatePasswordForm(String password) {
         if (!password.matches(PASSWORD_REGEX)) {
-//            throw PasswordFormatMismatchException.EXCEPTION;
+            throw PasswordFormatMismatchException.EXCEPTION;
         }
     }
 }

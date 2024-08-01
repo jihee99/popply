@@ -2,6 +2,7 @@ package com.ex.popply.event.model;
 
 import java.time.LocalDateTime;
 
+import com.ex.popply.common.model.BaseTimeEntity;
 import org.hibernate.annotations.Where;
 
 import jakarta.persistence.Column;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "status != 'DELETED'")
 @Entity(name = "tbl_event")
-public class Event {
+public class Event extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

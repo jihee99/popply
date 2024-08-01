@@ -2,6 +2,7 @@ package com.ex.popply.user.model;
 
 import java.time.LocalDateTime;
 
+import com.ex.popply.auth.exception.ForbiddenUserException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ex.popply.common.model.BaseTimeEntity;
@@ -73,7 +74,7 @@ public class User extends BaseTimeEntity {
 
 	public void login() {
 		if (!AccountState.NORMAL.equals(this.accountState)) {
-			// throw ForbiddenUserException.EXCEPTION;
+			 throw ForbiddenUserException.EXCEPTION;
 		}
 		lastLoginAt = LocalDateTime.now();
 	}

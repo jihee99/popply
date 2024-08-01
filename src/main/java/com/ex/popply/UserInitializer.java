@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.ex.popply.auth.repository.UserRepository;
+import com.ex.popply.user.model.AccountRole;
 import com.ex.popply.user.model.AccountState;
 import com.ex.popply.user.model.User;
 
@@ -28,6 +29,16 @@ public class UserInitializer implements ApplicationRunner {
                 .accountState(AccountState.NORMAL)
                 .build();
 
+		User user2 = User.builder()
+			.email("manager@test.com")
+			.password(passwordEncoder.encode("1234"))
+			.name("홍길동")
+			.phoneNumber("010-1234-1234")
+			.accountState(AccountState.NORMAL)
+			.accountRole(AccountRole.MANAGER)
+			.build();
+
         userRepository.save(user);
+        userRepository.save(user2);
     }
 }

@@ -1,4 +1,4 @@
-package com.ex.popply.auth.exception;
+package com.ex.popply.user.exception;
 
 import com.ex.popply.common.exception.CustomException;
 import com.ex.popply.common.exception.ErrorCode;

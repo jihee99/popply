@@ -30,7 +30,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                .formLogin(formLogin -> formLogin.disable()
                 .formLogin(formLogin -> formLogin
-                        .loginProcessingUrl("/loginProc")
+                        .loginProcessingUrl("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .permitAll()
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())

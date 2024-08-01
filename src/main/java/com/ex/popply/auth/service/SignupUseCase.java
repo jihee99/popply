@@ -1,7 +1,7 @@
 package com.ex.popply.auth.service;
 
-import com.ex.popply.auth.exception.AlreadySignUpUserException;
-import com.ex.popply.auth.exception.PasswordFormatMismatchException;
+import com.ex.popply.user.exception.AlreadySignUpUserException;
+import com.ex.popply.user.exception.PasswordFormatMismatchException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class SignupUseCase {
 
     public SignUpResponse execute(SignUpRequest request) {
         validateMemberNotExist(request.getEmail());
-        validatePasswordForm(request.getPassword());
+        // validatePasswordForm(request.getPassword());
         User user = userRepository.save(new User(request, encoder));
         return SignUpResponse.from(user);
     }

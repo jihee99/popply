@@ -20,6 +20,8 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("#################");
+        System.out.println(username);
         User user = userRepository.findByEmail(username)
             .orElseThrow(() -> {
                 throw new AuthenticationException("There is no such user : " + username) {};

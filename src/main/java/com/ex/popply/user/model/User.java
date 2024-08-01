@@ -2,7 +2,7 @@ package com.ex.popply.user.model;
 
 import java.time.LocalDateTime;
 
-import com.ex.popply.auth.exception.ForbiddenUserException;
+import com.ex.popply.user.exception.ForbiddenUserException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ex.popply.common.model.BaseTimeEntity;

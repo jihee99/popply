@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReadEventUseCase {
 
-	private final CommonEventService commonEvnetService;
+	private final CommonEventService commonEventService;
 
 	public List<EventResponse> execute(){
 		return null;

@@ -23,19 +23,22 @@ public class EventInfo{
 	private LocalDateTime startAt;
 	private Long runTime;
 
+	private Long limitPerHour;
+
 	protected Boolean isUpdated() {
-		return this.name != null && this.startAt != null && this.runTime != null;
+		return this.name != null && this.startAt != null && this.runTime != null && this.limitPerHour != null;
 	}
 	protected LocalDateTime endAt() {
 		return this.runTime == null ? null : this.startAt.plusMinutes(this.runTime);
 	}
 
 	@Builder
-	public EventInfo(String name, String description, LocalDateTime startAt, Long runTime) {
+	public EventInfo(String name, String description, LocalDateTime startAt, Long runTime, Long limitPerHour) {
 		this.name = name;
 		this.description = description;
 		this.startAt = startAt;
 		this.runTime = runTime;
+		this.limitPerHour = limitPerHour;
 	}
 
 }

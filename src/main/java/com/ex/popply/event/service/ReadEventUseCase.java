@@ -2,6 +2,7 @@ package com.ex.popply.event.service;
 
 import java.util.List;
 
+import com.ex.popply.event.mapper.EventMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +15,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReadEventUseCase {
 
-	private final CommonEventService commonEventService;
+	private final EventMapper eventMapper;
 
 	public List<EventResponse> execute(){
-		return null;
+		return eventMapper.toEventResponse();
 	}
 }

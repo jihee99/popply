@@ -2,6 +2,7 @@ package com.ex.popply.common.util;
 
 import java.util.List;
 
+import com.ex.popply.common.exception.SecurityContextNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +23,7 @@ public class UserUtil {
 	private static List<SimpleGrantedAuthority> notUserAuthority = List.of(anonymous, swagger);
 	private final UserRepository userRepository;
 
-	public Long getCurrentMemberId(){
+	public Long getCurrentUserId(){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (authentication == null) {
@@ -39,8 +40,8 @@ public class UserUtil {
 		return 0L;
 	}
 
-	public User getCurrentMember(){
-		return userRepository.findById(getCurrentMemberId()).orElseThrow(() -> UserNotFoundException.EXCEPTION);
+	public User getCurrentUser(){
+		return userRepository.findById(getCurrentUserId()).orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
 
 

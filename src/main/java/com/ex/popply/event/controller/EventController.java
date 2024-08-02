@@ -5,12 +5,9 @@ import java.util.List;
 import com.ex.popply.event.model.dto.request.CreateEventRequest;
 import com.ex.popply.event.service.CreateEventUseCase;
 import com.ex.popply.event.service.ReadEventInfoUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ex.popply.event.model.dto.response.EventResponse;
 import com.ex.popply.event.service.ReadEventUseCase;
@@ -44,8 +41,8 @@ public class EventController {
 	}
 
 	@Operation(summary = "매니저가 이벤트 정보를 등록하는 API")
-	@GetMapping("/event/new")
-	public ResponseEntity<EventResponse> getEvents( @RequestBody CreateEventRequest event) {
-		return ResponseEntity.ok(createEventUseCase.execute(event));
+	@PostMapping("/event/new")
+	public ResponseEntity<EventResponse> getEvents( @RequestBody @Valid CreateEventRequest createEventRequest) {
+		return ResponseEntity.ok(createEventUseCase.execute(createEventRequest));
 	}
 }

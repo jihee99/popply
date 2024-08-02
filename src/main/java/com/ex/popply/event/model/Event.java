@@ -1,8 +1,11 @@
 package com.ex.popply.event.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import com.ex.popply.common.model.BaseTimeEntity;
+import lombok.Builder;
 import org.hibernate.annotations.Where;
 
 import jakarta.persistence.Column;
@@ -34,15 +37,31 @@ public class Event extends BaseTimeEntity {
 	private EventStatus status = EventStatus.PREPARING;
 
 
-	public LocalDateTime getStartAt() {
+	public LocalDate getStartAt() {
 		if (this.eventInfo == null) return null;
 		return this.getEventInfo().getStartAt();
 	}
 
-	public LocalDateTime getEndAt() {
+	public LocalDate getEndAt() {
 		if (this.eventInfo == null) return null;
 		return this.getEventInfo().endAt();
 	}
+
+	@Builder
+	public Event(Long userId, String name, LocalDate startAt, Long period,
+				 LocalTime startTime, LocalTime endTime, Long runTime, Long limitPerHour) {
+		this.userId = userId;
+		this.eventInfo = EventInfo.builder()
+				.name(name)
+				.startAt(startAt)
+				.period(period)
+				.startTime(startTime)
+				.endTime(endTime)
+				.runTime(runTime)
+				.limitPerHour(limitPerHour)
+				.build();
+	}
+
 
 	public Boolean hasEventInfo() {
 		return this.eventInfo != null && this.eventInfo.isUpdated() ;
@@ -55,6 +74,7 @@ public class Event extends BaseTimeEntity {
 	public Boolean isClosed() {
 		return this.status == EventStatus.CLOSED;
 	}
+
 
 
 }

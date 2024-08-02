@@ -1,6 +1,8 @@
 package com.ex.popply.event.model.dto.request;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -29,13 +31,34 @@ public class CreateEventRequest {
 
 	@Schema(
 		type = "string",
-		pattern = "yyyy.MM.dd HH:mm",
-		defaultValue = "2024.08.01 10:00",
-		description = "시작 시각")
+		pattern = "yyyy.MM.dd",
+		defaultValue = "2024.08.30",
+		description = "시작일")
 	@NotNull(message = "시작일을 입력하세요.")
 	@Future(message = "시작일은 현재보다 이후여야 합니다.")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
-	private LocalDateTime startAt;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+	private LocalDate startAt;
+
+	@Schema(defaultValue = "30", description = "운영기간")
+	private Long period;
+
+	@Schema(
+			type = "string",
+			pattern = "HH:mm",
+			defaultValue = "09:00",
+			description = "시작시간")
+	@NotNull(message = "시작시간을 입력하세요.")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm", timezone = "Asia/Seoul")
+	private LocalTime startTime;
+
+	@Schema(
+			type = "string",
+			pattern = "HH:mm",
+			defaultValue = "21:00",
+			description = "종료시간")
+	@NotNull(message = "종료시간을 입력하세요.")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm", timezone = "Asia/Seoul")
+	private LocalTime endTime;
 
 	@Schema(defaultValue = "30", description = "소요시간")
 	@Positive(message = "예상 소요시간(분)을 입력하세요.")

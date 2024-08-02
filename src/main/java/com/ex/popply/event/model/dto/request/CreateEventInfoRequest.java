@@ -1,7 +1,6 @@
 package com.ex.popply.event.model.dto.request;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import org.hibernate.validator.constraints.Length;
@@ -18,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CreateEventRequest {
+public class CreateEventInfoRequest {
 
 	@Schema(defaultValue = "1", description = "매니저 고유 아이디")
 	@Positive

@@ -1,9 +1,8 @@
 package com.ex.popply.event.mapper;
 
 import com.ex.popply.common.annotation.Mapper;
-import com.ex.popply.common.vo.EventInfoVo;
 import com.ex.popply.event.model.Event;
-import com.ex.popply.event.model.dto.request.CreateEventRequest;
+import com.ex.popply.event.model.dto.request.CreateEventInfoRequest;
 import com.ex.popply.event.model.dto.response.EventResponse;
 import com.ex.popply.event.service.CommonEventService;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +17,17 @@ public class EventMapper {
 
 	private final CommonEventService commonEventService;
 
-	public Event toEntity(CreateEventRequest createEventRequest, Long userId) {
+	public Event toEntity(CreateEventInfoRequest createEventInfoRequest, Long userId) {
 		return Event.builder()
 			.userId(userId)
-			.name(createEventRequest.getName())
-			.description(createEventRequest.getDescription())
-			.startAt(createEventRequest.getStartAt())
-			.period(createEventRequest.getPeriod())
-			.startTime(createEventRequest.getStartTime())
-			.endTime(createEventRequest.getEndTime())
-			.runTime(createEventRequest.getRunTime())
-			.limitPerHour(createEventRequest.getLimitPerHour())
+			.name(createEventInfoRequest.getName())
+			.description(createEventInfoRequest.getDescription())
+			.startAt(createEventInfoRequest.getStartAt())
+			.period(createEventInfoRequest.getPeriod())
+			.startTime(createEventInfoRequest.getStartTime())
+			.endTime(createEventInfoRequest.getEndTime())
+			.runTime(createEventInfoRequest.getRunTime())
+			.limitPerHour(createEventInfoRequest.getLimitPerHour())
 			.build();
 	}
 
@@ -39,11 +38,4 @@ public class EventMapper {
 			.collect(Collectors.toList());
 	}
 
-
-	public EventResponse toEventInfoResponse(Event event) {
-		return EventResponse.builder()
-				.eventId(event.getId())
-				.userId(event.getUserId())
-				.eventInfo(EventInfoVo.from(event)).build();
-	}
 }

@@ -2,6 +2,7 @@ package com.ex.popply.event.service;
 
 import com.ex.popply.event.mapper.EventMapper;
 import com.ex.popply.event.model.Event;
+import com.ex.popply.event.model.dto.response.EventInfoResponse;
 import com.ex.popply.event.model.dto.response.EventResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,8 @@ public class ReadEventInfoUseCase {
 
     private final EventMapper eventMapper;
 
-    public EventResponse execute(Long eventId) {
+    public EventInfoResponse execute(Long eventId) {
         final Event event = commonEventService.findById(eventId);
-        return eventMapper.toEventInfoResponse(event);
+        return EventInfoResponse.of(event);
     }
 }

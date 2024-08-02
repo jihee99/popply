@@ -1,7 +1,6 @@
 package com.ex.popply.event.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import com.ex.popply.common.model.BaseTimeEntity;
@@ -48,11 +47,12 @@ public class Event extends BaseTimeEntity {
 	}
 
 	@Builder
-	public Event(Long userId, String name, LocalDate startAt, Long period,
+	public Event(Long userId, String name, String description, LocalDate startAt, Long period,
 				 LocalTime startTime, LocalTime endTime, Long runTime, Long limitPerHour) {
 		this.userId = userId;
 		this.eventInfo = EventInfo.builder()
 				.name(name)
+				.description(description)
 				.startAt(startAt)
 				.period(period)
 				.startTime(startTime)

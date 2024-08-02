@@ -29,6 +29,11 @@ public class CreateEventRequest {
 	@Length(max = 25)
 	private String name;
 
+	@Schema(defaultValue = "이벤트 설명", description = "이벤트 설명")
+	@NotBlank(message = "상세정보를 입력하세요.")
+	@Length(max = 500)
+	private String description;
+
 	@Schema(
 		type = "string",
 		pattern = "yyyy.MM.dd",

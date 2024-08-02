@@ -22,6 +22,7 @@ public class EventMapper {
 		return Event.builder()
 			.userId(userId)
 			.name(createEventRequest.getName())
+			.description(createEventRequest.getDescription())
 			.startAt(createEventRequest.getStartAt())
 			.period(createEventRequest.getPeriod())
 			.startTime(createEventRequest.getStartTime())

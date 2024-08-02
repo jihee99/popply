@@ -42,9 +42,10 @@ public class EventInfo{
 	}
 
 	@Builder
-	public EventInfo(String name, LocalDate startAt, Long period,
+	public EventInfo(String name, String description, LocalDate startAt, Long period,
 					 LocalTime startTime, LocalTime endTime, Long runTime, Long limitPerHour) {
 		this.name = name;
+		this.description = description;
 		this.startAt = startAt;
 		this.period = period;
 		this.startTime = startTime;
@@ -52,5 +53,6 @@ public class EventInfo{
 		this.runTime = runTime;
 		this.limitPerHour = limitPerHour;
 	}
+
 
 }

@@ -3,6 +3,7 @@ package com.ex.popply.event.controller;
 import java.util.List;
 
 import com.ex.popply.event.model.dto.request.CreateEventRequest;
+import com.ex.popply.event.model.dto.response.EventInfoResponse;
 import com.ex.popply.event.service.CreateEventUseCase;
 import com.ex.popply.event.service.ReadEventInfoUseCase;
 import jakarta.validation.Valid;
@@ -36,7 +37,7 @@ public class EventController {
 
 	@Operation(summary = "사용자가 이벤트 정보를 불러오는 API")
 	@GetMapping("/{eventId}")
-	public ResponseEntity<EventResponse> getEvents( @PathVariable Long eventId ) {
+	public ResponseEntity<EventInfoResponse> getEvents(@PathVariable Long eventId ) {
 		return ResponseEntity.ok(readEventInfoUseCase.execute(eventId));
 	}
 

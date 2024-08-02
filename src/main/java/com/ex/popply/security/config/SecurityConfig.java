@@ -38,9 +38,9 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic.disable())
 //                .apply(new MyCustomDsl()) // 커스텀 필터 등록
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/member/**").hasAnyRole("USER", "MANAGER", "ADMIN")
-                        .requestMatchers("/api/v1/manager/**").hasAnyRole("MANAGER", "ADMIN")
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/member/**").hasAnyRole("USER", "MANAGER", "ADMIN")
+                        .requestMatchers("/api/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2

@@ -1,5 +1,6 @@
 package com.ex.popply.event.service;
 
+import com.ex.popply.event.mapper.EventMapper;
 import com.ex.popply.event.model.Event;
 import com.ex.popply.event.model.dto.response.EventResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReadEventInfoUseCase {
 
-    private CommonEventService commonEventService;
+    private final CommonEventService commonEventService;
+
+    private final EventMapper eventMapper;
 
     public EventResponse execute(Long eventId) {
         final Event event = commonEventService.findById(eventId);
-
-        return null;
+        return eventMapper.toEventInfoResponse(event);
     }
 }

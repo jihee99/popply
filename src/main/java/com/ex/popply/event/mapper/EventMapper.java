@@ -1,6 +1,7 @@
 package com.ex.popply.event.mapper;
 
 import com.ex.popply.common.annotation.Mapper;
+import com.ex.popply.common.vo.EventInfoVo;
 import com.ex.popply.event.model.Event;
 import com.ex.popply.event.model.dto.request.CreateEventRequest;
 import com.ex.popply.event.model.dto.response.EventResponse;
@@ -38,5 +39,10 @@ public class EventMapper {
 	}
 
 
-
+	public EventResponse toEventInfoResponse(Event event) {
+		return EventResponse.builder()
+				.eventId(event.getId())
+				.userId(event.getUserId())
+				.eventInfo(EventInfoVo.from(event)).build();
+	}
 }

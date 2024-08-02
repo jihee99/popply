@@ -21,6 +21,7 @@ public class EventInfoVo {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
 	private LocalDateTime endAt;
 	private Long runTime;
+	private Long limitPerHour;
 
 	public static EventInfoVo from(Event event) {
 		EventInfo eventInfo = event.getEventInfo();
@@ -36,6 +37,7 @@ public class EventInfoVo {
 				.startAt(startDateTime)
 				.endAt(endDateTime)
 				.runTime(eventInfo.getRunTime())
+				.limitPerHour(eventInfo.getLimitPerHour())
 				.build();
 	}
 

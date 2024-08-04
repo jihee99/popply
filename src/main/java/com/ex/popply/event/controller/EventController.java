@@ -52,9 +52,8 @@ public class EventController {
 	}
 
 	@Operation(summary = "매니저가 이벤트 정보를 수정하는 API")
-	@PostMapping("{eventId}/info")
-	public ResponseEntity<EventInfoResponse> updateEventInfo(@RequestBody UpdateEventInfoRequest updateEventInfoRequest){
-
+	@PostMapping("{eventId}/update")
+	public ResponseEntity<EventResponse> updateEventInfo(@RequestBody UpdateEventInfoRequest updateEventInfoRequest){
 		return ResponseEntity.ok(updateEventInfoUseCase.execute(updateEventInfoRequest));
 	}
 }

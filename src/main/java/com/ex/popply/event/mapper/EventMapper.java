@@ -2,7 +2,9 @@ package com.ex.popply.event.mapper;
 
 import com.ex.popply.common.annotation.Mapper;
 import com.ex.popply.event.model.Event;
+import com.ex.popply.event.model.EventInfo;
 import com.ex.popply.event.model.dto.request.CreateEventInfoRequest;
+import com.ex.popply.event.model.dto.request.UpdateEventInfoRequest;
 import com.ex.popply.event.model.dto.response.EventResponse;
 import com.ex.popply.event.service.CommonEventService;
 import lombok.RequiredArgsConstructor;
@@ -38,4 +40,16 @@ public class EventMapper {
 			.collect(Collectors.toList());
 	}
 
+	public EventInfo toEventInfo(UpdateEventInfoRequest eventInfoRequest) {
+		return EventInfo.builder()
+				.name(eventInfoRequest.getName())
+				.description(eventInfoRequest.getDescription())
+				.limitPerHour(eventInfoRequest.getLimitPerHour())
+				.startAt(eventInfoRequest.getStartAt())
+				.period(eventInfoRequest.getPeriod())
+				.startTime(eventInfoRequest.getStartTime())
+				.endTime(eventInfoRequest.getEndTime())
+				.runTime(eventInfoRequest.getRunTime())
+				.build();
+	}
 }

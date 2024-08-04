@@ -62,6 +62,9 @@ public class Event extends BaseTimeEntity {
 				.build();
 	}
 
+	public void setEventInfo(EventInfo eventInfo){
+		this.eventInfo = eventInfo;
+	}
 
 	public Boolean hasEventInfo() {
 		return this.eventInfo != null && this.eventInfo.isUpdated() ;

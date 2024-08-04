@@ -5,15 +5,12 @@ import java.util.List;
 import com.ex.popply.event.model.dto.request.CreateEventInfoRequest;
 import com.ex.popply.event.model.dto.request.UpdateEventInfoRequest;
 import com.ex.popply.event.model.dto.response.EventInfoResponse;
-import com.ex.popply.event.service.CreateEventUseCase;
-import com.ex.popply.event.service.ReadEventInfoUseCase;
-import com.ex.popply.event.service.UpdateEventInfoUseCase;
+import com.ex.popply.event.service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ex.popply.event.model.dto.response.EventResponse;
-import com.ex.popply.event.service.ReadEventUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,8 +27,9 @@ public class EventController {
 	private final ReadEventUseCase readEventUseCase;
 	private final CreateEventUseCase createEventUseCase;
 	private final ReadEventInfoUseCase readEventInfoUseCase;
-
 	private final UpdateEventInfoUseCase updateEventInfoUseCase;
+	private final OpenEventUseCase openEventUseCase;
+
 	@Operation(summary = "사용자가 이벤트 목록을 불러오는 API")
 	@GetMapping("/list")
 	public ResponseEntity<List<EventResponse>> getAllEvents(){
@@ -55,5 +53,11 @@ public class EventController {
 	@PostMapping("{eventId}/update")
 	public ResponseEntity<EventResponse> updateEventInfo(@RequestBody UpdateEventInfoRequest updateEventInfoRequest){
 		return ResponseEntity.ok(updateEventInfoUseCase.execute(updateEventInfoRequest));
+	}
+
+	@Operation(summary = "이벤트를 오픈 상태로 변경합니다.")
+	@GetMapping("/{eventId}/open")
+	public EventResponse updateEventStatus(@PathVariable Long eventId) {
+		return openEventUseCase.execute(eventId);
 	}
 }

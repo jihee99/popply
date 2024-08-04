@@ -3,7 +3,10 @@ package com.ex.popply.event.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.ex.popply.common.exception.CustomException;
 import com.ex.popply.common.model.BaseTimeEntity;
+import com.ex.popply.event.exception.AlreadyOpenStatusException;
+import com.ex.popply.event.exception.EventOpenTimeExpiredException;
 import lombok.Builder;
 import org.hibernate.annotations.Where;
 
@@ -79,5 +82,18 @@ public class Event extends BaseTimeEntity {
 	}
 
 
+	public void open() {
+		validateStartAt();
+		updateStatus(EventStatus.OPEN, AlreadyOpenStatusException.EXCEPTION);
+	}
 
+	public void validateStartAt() {
+		if (this.getStartAt().isBefore(LocalDate.now()))
+			throw EventOpenTimeExpiredException.EXCEPTION;
+	}
+
+	private void updateStatus(EventStatus status, CustomException exception) {
+		if (this.status == status) throw exception;
+		this.status = status;
+	}
 }

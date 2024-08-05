@@ -32,6 +32,9 @@ public class TicketResponse {
     @Schema(description = "재고")
     private final Long quantity;
 
+    @Schema(description = "재고공개 여부")
+    private final Boolean isQuantityPublic;
+
     @Schema(description = "재고가 감소한 티켓인지 리턴")
     private final Boolean isSold;
 
@@ -44,14 +47,18 @@ public class TicketResponse {
     @Schema(description = "티켓 종료 시간")
     private final LocalDateTime endTime;
 
-    public static TicketResponse from(Ticket ticket) {
+    public static TicketResponse from(Ticket ticket, Boolean isAdmin) {
 
         return TicketResponse.builder()
                 .ticketItemId(ticket.getId())
                 .ticketName(ticket.getName())
                 .description(ticket.getDescription())
                 .price(ticket.getPrice())
-                .quantity(ticket.getQuantity())
+                .quantity(
+                        isAdmin || ticket.getIsQuantityPublic()
+                                ? ticket.getQuantity()
+                                : null)
+                .isQuantityPublic(ticket.getIsQuantityPublic())
                 .purchaseLimit(ticket.getPurchaseLimit())
                 .supplyCount(ticket.getSupplyCount())
                 .isSold(ticket.isSold())
@@ -60,4 +67,5 @@ public class TicketResponse {
                 .endTime(ticket.getEndTime())
                 .build();
     }
+
 }

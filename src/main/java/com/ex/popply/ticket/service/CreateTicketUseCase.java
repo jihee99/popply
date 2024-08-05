@@ -35,7 +35,7 @@ public class CreateTicketUseCase {
         List<Ticket> savedTickets = ticketRepository.saveAll(tickets);
 
         return savedTickets.stream()
-                .map(TicketResponse::from)
+                .map(ticket -> TicketResponse.from(ticket, false))
                 .toList();
     }
 

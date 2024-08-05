@@ -64,6 +64,7 @@ public class Ticket {
     @Comment("티켓 상태")
     private TicketStatus ticketStatus = TicketStatus.VALID;
 
+    private Boolean isQuantityPublic;
 
     @Builder
     public Ticket(
@@ -74,6 +75,7 @@ public class Ticket {
             Long quantity,
             Long supplyCount,
             Long purchaseLimit,
+            Boolean isQuantityPublic,
             Boolean isSellable,
             LocalDateTime saleStartAt,
             LocalDateTime saleEndAt,
@@ -87,6 +89,7 @@ public class Ticket {
         this.quantity = quantity;
         this.supplyCount = supplyCount;
         this.purchaseLimit = purchaseLimit;
+        this.isQuantityPublic = isQuantityPublic;
         this.isSellable = isSellable;
         this.saleStartAt = saleStartAt;
         this.saleEndAt = saleEndAt;

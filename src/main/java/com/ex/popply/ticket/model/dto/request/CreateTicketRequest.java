@@ -25,9 +25,13 @@ public class CreateTicketRequest {
     @Schema(nullable = false, example = "100")
     private Long supplyCount;
 
+    @NotNull
+    @Schema(nullable = false, example = "true")
+    private Boolean isQuantityPublic;
 
     @NotNull
     @Schema(nullable = false, example = "1")
     private Long purchaseLimit;
+
 
 }

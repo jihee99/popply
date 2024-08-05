@@ -30,6 +30,7 @@ public class TicketMapper {
                 .price(createTicketRequest.getPrice())
                 .quantity(createTicketRequest.getSupplyCount())
                 .supplyCount(createTicketRequest.getSupplyCount())
+                .isQuantityPublic(createTicketRequest.getIsQuantityPublic())
                 .purchaseLimit(createTicketRequest.getPurchaseLimit())
                 .isSellable(true)
                 .build();
@@ -41,7 +42,7 @@ public class TicketMapper {
         List<Ticket> tickets = ticketRepository.findAllByEventIdAndTicketStatus(event.getId(), TicketStatus.VALID);
         return GetEventTicketResponse.from(
                 tickets.stream()
-                        .map(TicketResponse::from)
+                        .map(ticket -> TicketResponse.from(ticket, isAdmin))
                         .toList());
     }
 

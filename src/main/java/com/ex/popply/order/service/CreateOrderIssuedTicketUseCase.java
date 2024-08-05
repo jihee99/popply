@@ -1,8 +1,6 @@
-package com.ex.popply.ticket.service;
+package com.ex.popply.order.service;
 
 import com.ex.popply.common.util.UserUtil;
-import com.ex.popply.event.EventRepository;
-import com.ex.popply.event.exception.EventNotFoundException;
 import com.ex.popply.event.model.Event;
 import com.ex.popply.event.service.CommonEventService;
 import com.ex.popply.ticket.exception.TicketNotFoundException;
@@ -20,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class CreateIssuedTicketUseCase {
+public class CreateOrderIssuedTicketUseCase {
 
     private final UserUtil userUtils;
     private final CommonEventService commonEventService;

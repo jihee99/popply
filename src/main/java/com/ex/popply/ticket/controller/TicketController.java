@@ -1,11 +1,8 @@
 package com.ex.popply.ticket.controller;
 
-import com.ex.popply.ticket.model.dto.request.CreateIssuedTicketRequest;
 import com.ex.popply.ticket.model.dto.response.GetEventTicketResponse;
 import com.ex.popply.ticket.model.dto.request.CreateTicketRequest;
-import com.ex.popply.ticket.model.dto.response.IssuedTicketResponse;
 import com.ex.popply.ticket.model.dto.response.TicketResponse;
-import com.ex.popply.ticket.service.CreateIssuedTicketUseCase;
 import com.ex.popply.ticket.service.CreateTicketUseCase;
 import com.ex.popply.ticket.service.DeleteTicketUseCase;
 import com.ex.popply.ticket.service.GetEventTicketUseCase;
@@ -28,7 +25,6 @@ public class TicketController {
     private final CreateTicketUseCase createTicketUseCase;
     private final DeleteTicketUseCase deleteTicketUseCase;
     private final GetEventTicketUseCase getEventTicketUseCase;
-    private final CreateIssuedTicketUseCase createIssuedTicketUseCase;
 
     @Operation(summary = "특정 이벤트에 속하는 티켓 상품을 생성하는 API")
     @PostMapping
@@ -57,11 +53,5 @@ public class TicketController {
         return ResponseEntity.ok(getEventTicketUseCase.executeForManager(eventId));
     }
 
-    @Operation(summary = "해당 이벤트의 티켓을 발급받는 API")
-    @PostMapping("/issue")
-    public ResponseEntity<IssuedTicketResponse> issuedEventTicket(@PathVariable Long eventId, @RequestBody @Valid CreateIssuedTicketRequest createIssuedTicketRequest){
-        createIssuedTicketUseCase.execute(createIssuedTicketRequest, eventId);
-        return null;
-    }
 
 }

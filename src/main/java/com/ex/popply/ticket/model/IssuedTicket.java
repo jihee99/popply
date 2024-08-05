@@ -22,6 +22,8 @@ public class IssuedTicket extends BaseTimeEntity {
     private Long id;
     private String orderUuid;
 
+    private String orderId;
+
     private String issuedTicketNo;
 
     private Long eventId;

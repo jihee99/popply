@@ -22,7 +22,8 @@ public class IssuedTicket extends BaseTimeEntity {
     private Long id;
     private String orderUuid;
 
-    private String orderId;
+    @Column(name = "order_id")
+    private Long orderId;
 
     private String issuedTicketNo;
 

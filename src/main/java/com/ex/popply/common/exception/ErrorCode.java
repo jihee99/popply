@@ -39,8 +39,11 @@ public enum ErrorCode {
     TICKET_NOT_FOUND(HttpStatus.NOT_FOUND, "TICKET-003", "티켓 아이템을 찾을 수 없습니다."),
     INVALID_TICKET(HttpStatus.BAD_REQUEST, "TICKET-004", "해당 이벤트 소속의 티켓이 아닙니다."),
 //    @ExplainError("이미 재고가 감소되어 티켓상품 삭제가 불가능할 경우 발생하는 오류입니다.")
-    FORBIDDEN_TICKET_DELETE(HttpStatus.BAD_REQUEST, "TICKET-005", "티켓상품 삭제가 불가능한 상태입니다.");
+    FORBIDDEN_TICKET_DELETE(HttpStatus.BAD_REQUEST, "TICKET-005", "티켓상품 삭제가 불가능한 상태입니다."),
 
+    ORDER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ORDER-001", "주문상품을 찾을 수 없습니다.")
+
+    ;
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;

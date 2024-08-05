@@ -1,6 +1,7 @@
 package com.ex.popply.order.model;
 
 import com.ex.popply.event.model.Event;
+import com.ex.popply.order.exception.OrderItemNotFoundException;
 import com.ex.popply.ticket.model.IssuedTicket;
 import com.ex.popply.ticket.model.Ticket;
 import jakarta.persistence.*;
@@ -38,7 +39,7 @@ public class Order {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private List<IssuedTicket> tickets = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime approvedAt;
 
@@ -57,20 +58,17 @@ public class Order {
         this.orderNo = "P" + Long.sum(NO_START_NUMBER, this.id);
     }
 
-    public Long getTicketId() {
-        return getTickets().get(0).getId();
-    }
 
     @Builder
     public Order(
             Long userId,
-            List<IssuedTicket> tickets,
+            List<OrderItem> orderItems,
             OrderStatus orderStatus,
             Long eventId
     ) {
         this.userId = userId;
         this.eventId = eventId;
-        this.tickets.addAll(tickets);
+        this.orderItems.addAll(orderItems);
         this.orderStatus = orderStatus;
     }
 
@@ -79,7 +77,7 @@ public class Order {
     ) {
         Order order = Order.builder()
                 .userId(userId)
-//                .tickets(get(, item))
+                .orderItems(getOrderItems(ticket))
                 .orderStatus(OrderStatus.PENDING_APPROVE)
                 .eventId(ticket.getEventId())
                 .build();
@@ -88,6 +86,21 @@ public class Order {
 //        orderValidator.validApproveStatePurchaseLimit(order);
 
         return order;
+    }
+
+    public Long getItemId() {
+        return getOrderItem().getItemId();
+    }
+
+    private OrderItem getOrderItem() {
+        return orderItems.stream()
+                .findFirst()
+                .orElseThrow(() -> OrderItemNotFoundException.EXCEPTION);
+    }
+
+    @NotNull
+    private static List<OrderItem> getOrderItems(Ticket item) {
+        return OrderItem.of(item.getQuantity(), item);
     }
 
 }

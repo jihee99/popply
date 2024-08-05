@@ -58,22 +58,22 @@ public class EventController {
 		return ResponseEntity.ok(updateEventInfoUseCase.execute(updateEventInfoRequest));
 	}
 
-	@Operation(summary = "이벤트를 오픈 상태로 변경합니다.")
+	@Operation(summary = "이벤트를 오픈 상태로 변경하는 API")
 	@GetMapping("/{eventId}/open")
-	public EventResponse openEventStatus(@PathVariable Long eventId) {
-		return openEventUseCase.execute(eventId);
+	public ResponseEntity<EventResponse> openEventStatus(@PathVariable Long eventId) {
+		return ResponseEntity.ok(openEventUseCase.execute(eventId));
 	}
 
-	@Operation(summary = "이벤트 상태를 변경합니다.")
+	@Operation(summary = "이벤트 상태를 변경하는 API")
 	@PostMapping("/{eventId}/status")
-	public EventResponse closeEventStatus(@PathVariable Long eventId, @RequestBody @Valid UpdateEventStatusRequest updateEventStatusRequest) {
-		return updateEventStatusUseCase.execute(eventId, updateEventStatusRequest);
+	public ResponseEntity<EventResponse> closeEventStatus(@PathVariable Long eventId, @RequestBody @Valid UpdateEventStatusRequest updateEventStatusRequest) {
+		return ResponseEntity.ok(updateEventStatusUseCase.execute(eventId, updateEventStatusRequest));
 	}
 
-	@Operation(summary = "이벤트를 삭제합니다.")
+	@Operation(summary = "이벤트를 삭제하는 API")
 	@GetMapping("/{eventId}/delete")
-	public EventResponse deleteEvent(@PathVariable Long eventId) {
-		return deleteEventUseCase.execute(eventId);
+	public ResponseEntity<EventResponse> deleteEvent(@PathVariable Long eventId) {
+		return ResponseEntity.ok(deleteEventUseCase.execute(eventId));
 	}
 
 }

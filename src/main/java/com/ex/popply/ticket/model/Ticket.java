@@ -1,5 +1,6 @@
 package com.ex.popply.ticket.model;
 
+import com.ex.popply.common.model.BaseTimeEntity;
 import com.ex.popply.ticket.exception.ForbiddenTicketDeleteException;
 import com.ex.popply.ticket.exception.InvalidTicketException;
 import com.ex.popply.ticket.exception.TicketQuantityException;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Ticket {
+public class Ticket extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

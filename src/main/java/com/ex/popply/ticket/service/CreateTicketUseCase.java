@@ -28,6 +28,7 @@ public class CreateTicketUseCase {
     private final EventRepository eventRepository;
     private final TicketMapper ticketMapper;
 
+
     public List<TicketResponse> execute(CreateTicketRequest createTicketRequest, Long eventId) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> EventNotFoundException.EXCEPTION);
         List<Ticket> tickets = generateTickets(event, createTicketRequest, eventId);
@@ -36,7 +37,6 @@ public class CreateTicketUseCase {
         return savedTickets.stream()
                 .map(TicketResponse::from)
                 .toList();
-//        return TicketResponse.from(ticketRepository.save(ticketMapper.toTicket(createTicketRequest, eventId)));
     }
 
     private List<Ticket> generateTickets(Event event, CreateTicketRequest request, Long eventId) {

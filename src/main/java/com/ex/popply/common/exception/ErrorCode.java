@@ -32,7 +32,13 @@ public enum ErrorCode {
 //    @ExplainError("주문 및 승인 요청 시 티켓 상품 재고보다 많은 양을 주문 시 발생하는 오류입니다.")
     TICKET_QUANTITY_LESS_THAN_ZERO(HttpStatus.BAD_REQUEST, "TICKET-001", "티켓 재고가 0보다 작을 수 없습니다."),
 //    @ExplainError("주문 요청한 티켓 상품 재고가 부족할 때 발생하는 오류입니다.")
-    TICKET_QUANTITY_LACK(HttpStatus.BAD_REQUEST, "TICKET-002", "티켓 상품 재고가 부족합니다.");
+    TICKET_QUANTITY_LACK(HttpStatus.BAD_REQUEST, "TICKET-002", "티켓 상품 재고가 부족합니다."),
+
+//    @ExplainError("요청에서 보내준 티켓 상품 id 값이 올바르지 않을 때 발생하는 오류입니다.")
+    TICKET_NOT_FOUND(HttpStatus.NOT_FOUND, "TICKET-003", "티켓 아이템을 찾을 수 없습니다."),
+    INVALID_TICKET(HttpStatus.BAD_REQUEST, "TICKET-004", "해당 이벤트 소속의 티켓이 아닙니다."),
+//    @ExplainError("이미 재고가 감소되어 티켓상품 삭제가 불가능할 경우 발생하는 오류입니다.")
+    FORBIDDEN_TICKET_DELETE(HttpStatus.BAD_REQUEST, "TICKET-005", "티켓상품 삭제가 불가능한 상태입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

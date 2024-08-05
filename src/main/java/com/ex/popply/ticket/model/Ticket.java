@@ -1,5 +1,7 @@
 package com.ex.popply.ticket.model;
 
+import com.ex.popply.ticket.exception.ForbiddenTicketDeleteException;
+import com.ex.popply.ticket.exception.InvalidTicketException;
 import com.ex.popply.ticket.exception.TicketQuantityException;
 import com.ex.popply.ticket.exception.TicketQuantityLackException;
 import jakarta.persistence.*;
@@ -60,7 +62,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     @ColumnDefault(value = "'VALID'")
     @Comment("티켓 상태")
-    private TicketStatus ticketItemStatus = TicketStatus.VALID;
+    private TicketStatus ticketStatus = TicketStatus.VALID;
 
 
     @Builder
@@ -99,7 +101,7 @@ public class Ticket {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-    
+
     public Boolean isQuantityReduced() {
         return !this.quantity.equals(this.supplyCount);
     }
@@ -125,5 +127,20 @@ public class Ticket {
     public Boolean isQuantityLeft() {
         return quantity > 0;
     }
+
+    public void validateEventId(Long eventId) {
+        if (!this.getEventId().equals(eventId)) {
+            throw InvalidTicketException.EXCEPTION;
+        }
+    }
+
+    public void deleteTicket() {
+        // 재고 감소된 티켓상품은 삭제 불가
+        if (this.isQuantityReduced()) {
+            throw ForbiddenTicketDeleteException.EXCEPTION;
+        }
+        this.ticketStatus = TicketStatus.DELETED;
+    }
+
 
 }

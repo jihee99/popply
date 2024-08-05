@@ -27,7 +27,12 @@ public enum ErrorCode {
     ALREADY_DELETED_STATUS(HttpStatus.BAD_REQUEST, "EVENT-007", "이미 삭제된 이벤트입니다."),
     USE_ANOTHER_API(HttpStatus.BAD_REQUEST, "EVENT-008", "잘못된 접근입니다."),
     CANNOT_DELETE_BY_ISSUED_TICKET(HttpStatus.BAD_REQUEST, "EVENT-009", "발급 티켓이 있는 전시는 삭제할 수 없습니다."),
-    CANNOT_DELETE_BY_OPEN_EVENT(HttpStatus.BAD_REQUEST, "EVENT-010", "오픈 상태인 전시는 삭제할 수 없습니다.");
+    CANNOT_DELETE_BY_OPEN_EVENT(HttpStatus.BAD_REQUEST, "EVENT-010", "오픈 상태인 전시는 삭제할 수 없습니다."),
+
+//    @ExplainError("주문 및 승인 요청 시 티켓 상품 재고보다 많은 양을 주문 시 발생하는 오류입니다.")
+    TICKET_QUANTITY_LESS_THAN_ZERO(HttpStatus.BAD_REQUEST, "TICKET-001", "티켓 재고가 0보다 작을 수 없습니다."),
+//    @ExplainError("주문 요청한 티켓 상품 재고가 부족할 때 발생하는 오류입니다.")
+    TICKET_QUANTITY_LACK(HttpStatus.BAD_REQUEST, "TICKET-002", "티켓 상품 재고가 부족합니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

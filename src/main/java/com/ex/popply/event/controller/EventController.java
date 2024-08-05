@@ -76,6 +76,4 @@ public class EventController {
 		return deleteEventUseCase.execute(eventId);
 	}
 
-
-
 }

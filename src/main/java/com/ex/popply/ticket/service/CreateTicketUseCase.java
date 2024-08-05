@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -39,25 +40,33 @@ public class CreateTicketUseCase {
     }
 
     private List<Ticket> generateTickets(Event event, CreateTicketRequest request, Long eventId) {
-
         List<Ticket> tickets = new ArrayList<>();
-        LocalDateTime startDateTime = event.getStartAt().atTime(event.getEventInfo().getStartTime());
-        LocalDateTime endDateTime = event.getEndAt().atTime(event.getEventInfo().getEndTime());
+        LocalDate currentDate = event.getStartAt();
+        LocalDate endDate = event.getEndAt();
+        LocalTime startTime = event.getEventInfo().getStartTime();
+        LocalTime endTime = event.getEventInfo().getEndTime();
         Duration runTime = Duration.ofMinutes(event.getEventInfo().getRunTime());
 
-        while (startDateTime.isBefore(endDateTime)) {
-            LocalDateTime ticketEndTime = startDateTime.plus(runTime);
-            if (ticketEndTime.isAfter(endDateTime)) {
-                ticketEndTime = endDateTime;
+        while (!currentDate.isAfter(endDate)) {
+            LocalDateTime startDateTime = LocalDateTime.of(currentDate, startTime);
+            LocalDateTime endDateTime = LocalDateTime.of(currentDate, endTime);
+
+            while (startDateTime.isBefore(endDateTime)) {
+                LocalDateTime ticketEndTime = startDateTime.plus(runTime);
+                if (ticketEndTime.isAfter(endDateTime)) {
+                    ticketEndTime = endDateTime;
+                }
+
+                Ticket ticket = ticketMapper.toTicket(request, eventId);
+                ticket.setStartTime(startDateTime);
+                ticket.setEndTime(ticketEndTime);
+
+                tickets.add(ticket);
+
+                startDateTime = ticketEndTime;
             }
 
-            Ticket ticket = ticketMapper.toTicket(request, eventId);
-            ticket.setStartTime(startDateTime);
-            ticket.setEndTime(ticketEndTime);
-
-            tickets.add(ticket);
-
-            startDateTime = ticketEndTime;
+            currentDate = currentDate.plusDays(1);
         }
 
         return tickets;

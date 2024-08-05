@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 //@SecurityRequirement(name = "access-token")
-@Tag(name = "4. 티켓 상품 관리 API")
+@Tag(name = "3. 티켓 관리 API")
 @RestController
 @RequestMapping("/api/events/{eventId}/tickets")
 @RequiredArgsConstructor
@@ -40,13 +40,16 @@ public class TicketController {
         return deleteTicketUseCase.execute(eventId, ticketItemId);
     }
 
-    @Operation(summary = "해당 이벤트의 티켓을 모두 조회합니다.(admin)", description = "재고 정보가 무조건 공개됩니다.")
+    @Operation(summary = "해당 이벤트의 티켓을 모두 조회합니다")
+    @GetMapping("/list")
+    public GetEventTicketResponse getEventTicketItems(@PathVariable Long eventId) {
+        return getEventTicketUseCase.execute(eventId);
+    }
+
+    @Operation(summary = "해당 이벤트의 티켓을 모두 조회합니다.(admin)", description = "재고 정보가 공개됩니다.")
     @GetMapping("/admin")
     public GetEventTicketResponse getEventTicketItemsForManager(@PathVariable Long eventId) {
         return getEventTicketUseCase.executeForManager(eventId);
     }
-
-
-
 
 }

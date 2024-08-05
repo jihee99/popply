@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 @RequiredArgsConstructor
@@ -38,12 +39,13 @@ public class TicketMapper {
 
     @Transactional(readOnly = true)
     public GetEventTicketResponse toGetEventTicketResponse(Long eventId, Boolean isAdmin) {
+        System.out.println(isAdmin);
         Event event = commonEventService.findById(eventId);
         List<Ticket> tickets = ticketRepository.findAllByEventIdAndTicketStatus(event.getId(), TicketStatus.VALID);
         return GetEventTicketResponse.from(
                 tickets.stream()
                         .map(ticket -> TicketResponse.from(ticket, isAdmin))
-                        .toList());
+                        .collect(Collectors.toList()));
     }
 
 }

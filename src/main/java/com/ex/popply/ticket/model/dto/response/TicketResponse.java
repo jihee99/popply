@@ -48,17 +48,16 @@ public class TicketResponse {
     private final LocalDateTime endTime;
 
     public static TicketResponse from(Ticket ticket, Boolean isAdmin) {
-
         return TicketResponse.builder()
                 .ticketItemId(ticket.getId())
                 .ticketName(ticket.getName())
                 .description(ticket.getDescription())
                 .price(ticket.getPrice())
+                .isQuantityPublic(ticket.getIsQuantityPublic())
                 .quantity(
-                        isAdmin || ticket.getIsQuantityPublic()
+                    isAdmin || ticket.getIsQuantityPublic()
                                 ? ticket.getQuantity()
                                 : null)
-                .isQuantityPublic(ticket.getIsQuantityPublic())
                 .purchaseLimit(ticket.getPurchaseLimit())
                 .supplyCount(ticket.getSupplyCount())
                 .isSold(ticket.isSold())

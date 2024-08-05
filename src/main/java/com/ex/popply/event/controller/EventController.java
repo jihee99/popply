@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ex.popply.event.model.dto.request.CreateEventInfoRequest;
 import com.ex.popply.event.model.dto.request.UpdateEventInfoRequest;
+import com.ex.popply.event.model.dto.request.UpdateEventStatusRequest;
 import com.ex.popply.event.model.dto.response.EventInfoResponse;
 import com.ex.popply.event.service.*;
 import jakarta.validation.Valid;
@@ -29,6 +30,8 @@ public class EventController {
 	private final ReadEventInfoUseCase readEventInfoUseCase;
 	private final UpdateEventInfoUseCase updateEventInfoUseCase;
 	private final OpenEventUseCase openEventUseCase;
+	private final UpdateEventStatusUseCase updateEventStatusUseCase;
+	private final DeleteEventUseCase deleteEventUseCase;
 
 	@Operation(summary = "사용자가 이벤트 목록을 불러오는 API")
 	@GetMapping("/list")
@@ -57,7 +60,22 @@ public class EventController {
 
 	@Operation(summary = "이벤트를 오픈 상태로 변경합니다.")
 	@GetMapping("/{eventId}/open")
-	public EventResponse updateEventStatus(@PathVariable Long eventId) {
+	public EventResponse openEventStatus(@PathVariable Long eventId) {
 		return openEventUseCase.execute(eventId);
 	}
+
+	@Operation(summary = "이벤트 상태를 변경합니다.")
+	@PostMapping("/{eventId}/status")
+	public EventResponse closeEventStatus(@PathVariable Long eventId, @RequestBody @Valid UpdateEventStatusRequest updateEventStatusRequest) {
+		return updateEventStatusUseCase.execute(eventId, updateEventStatusRequest);
+	}
+
+	@Operation(summary = "이벤트를 삭제합니다.")
+	@GetMapping("/{eventId}/delete")
+	public EventResponse deleteEvent(@PathVariable Long eventId) {
+		return deleteEventUseCase.execute(eventId);
+	}
+
+
+
 }

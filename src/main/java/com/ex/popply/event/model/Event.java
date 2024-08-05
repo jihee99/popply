@@ -5,8 +5,7 @@ import java.time.LocalTime;
 
 import com.ex.popply.common.exception.CustomException;
 import com.ex.popply.common.model.BaseTimeEntity;
-import com.ex.popply.event.exception.AlreadyOpenStatusException;
-import com.ex.popply.event.exception.EventOpenTimeExpiredException;
+import com.ex.popply.event.exception.*;
 import lombok.Builder;
 import org.hibernate.annotations.Where;
 
@@ -87,6 +86,14 @@ public class Event extends BaseTimeEntity {
 		updateStatus(EventStatus.OPEN, AlreadyOpenStatusException.EXCEPTION);
 	}
 
+	public void close() {
+		updateStatus(EventStatus.CLOSED, AlreadyCloseStatusException.EXCEPTION);
+	}
+
+	public void prepare() {
+		updateStatus(EventStatus.PREPARING, AlreadyPreparingStatusException.EXCEPTION);
+	}
+
 	public void validateStartAt() {
 		if (this.getStartAt().isBefore(LocalDate.now()))
 			throw EventOpenTimeExpiredException.EXCEPTION;
@@ -96,4 +103,12 @@ public class Event extends BaseTimeEntity {
 		if (this.status == status) throw exception;
 		this.status = status;
 	}
+
+	public void delete() {
+		// 오픈된 이벤트는 삭제 불가
+		if (this.status == EventStatus.OPEN) throw CannotDeleteByOpenEventException.EXCEPTION;
+		if (this.status == EventStatus.DELETED) throw AlreadyDeletedStatusException.EXCEPTION;
+		this.status = EventStatus.DELETED;
+	}
+
 }

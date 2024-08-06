@@ -20,11 +20,11 @@ public class CreateTicketRequest {
     private String description;
 
     @NotNull
-    @Schema(defaultValue = "0", nullable = false, example = "4000")
+    @Schema(defaultValue = "0", nullable = false, example = "0")
     private Long price;
 
     @NotNull
-    @Schema(nullable = false, example = "100")
+    @Schema(nullable = false, example = "30")
     private Long supplyCount;
 
     @NotNull

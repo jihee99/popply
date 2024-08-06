@@ -1,6 +1,7 @@
 package com.ex.popply.order.model;
 
 import com.ex.popply.order.exception.OrderItemNotFoundException;
+import com.ex.popply.order.service.OrderValidationService;
 import com.ex.popply.ticket.model.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,8 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -35,9 +34,9 @@ public class Order {
     private String uuid;
     private String orderNo;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private List<OrderItem> orderItems = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_item_id")
+    private OrderItem orderItem;
 
     private LocalDateTime approvedAt;
 
@@ -60,30 +59,39 @@ public class Order {
     @Builder
     public Order(
             Long userId,
-            List<OrderItem> orderItems,
+            OrderItem orderItem,
             OrderStatus orderStatus,
             Long eventId
     ) {
         this.userId = userId;
         this.eventId = eventId;
-        this.orderItems.addAll(orderItems);
+        this.orderItem = orderItem;
         this.orderStatus = orderStatus;
     }
 
     public static Order createApproveOrder(
-            Long userId, Ticket ticket
+            Long userId, Ticket ticket, OrderItem orderItem, OrderValidationService orderValidator
     ) {
         Order order = Order.builder()
                 .userId(userId)
-                .orderItems((List<OrderItem>) getOrderItems(ticket))
+                .orderItem(orderItem)
                 .orderStatus(OrderStatus.PENDING_APPROVE)
                 .eventId(ticket.getEventId())
                 .build();
 
-//        orderValidator.validCreate(order);
+        orderValidator.validCreate(order);
 //        orderValidator.validApproveStatePurchaseLimit(order);
 
         return order;
+    }
+
+    public void approve(Long currentUserId, Order order, OrderValidationService orderValidator) {
+        // 선착순 방식의 0원 결제시
+        orderValidator.validCanApproveOrder(order);
+        /*주문상태가 0일때*/
+//        orderValidator.validCanFreeConfirm(this);
+        this.approvedAt = LocalDateTime.now();
+        this.orderStatus = OrderStatus.APPROVED;
     }
 
     public Long getItemId() {
@@ -91,14 +99,25 @@ public class Order {
     }
 
     private OrderItem getOrderItem() {
-        return orderItems.stream()
-                .findFirst()
-                .orElseThrow(() -> OrderItemNotFoundException.EXCEPTION);
+        if (orderItem == null) {
+            throw OrderItemNotFoundException.EXCEPTION;
+        }
+        return orderItem;
     }
 
     @NotNull
-    private static OrderItem getOrderItems(Ticket item) {
-        return OrderItem.of(item.getQuantity(), item);
+    private static OrderItem getOrderItems(Ticket ticket) {
+        return OrderItem.of(ticket.getQuantity(), ticket);
+    }
+
+    public Long getTotalQuantity() {
+        System.out.println("--------------getTotalQuantity--------------");
+        System.out.println("Order Item: " + orderItem.getQuantity());
+        return orderItem != null ? orderItem.getQuantity() : 0L;
+    }
+
+    public Long getDistinctItemId() {
+        return orderItem != null ? orderItem.getItemId() : null;
     }
 
 }

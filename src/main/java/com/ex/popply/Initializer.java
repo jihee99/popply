@@ -90,7 +90,7 @@ public class Initializer implements ApplicationRunner {
                         .description("티켓설명")
                         .price(0L)
                         .supplyCount(30L)
-                        .isQuantityPublic(false)
+                        .isQuantityPublic(true)
                         .purchaseLimit(1L)
                         .build();
 

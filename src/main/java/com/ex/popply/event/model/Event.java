@@ -1,7 +1,10 @@
 package com.ex.popply.event.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 
 import com.ex.popply.common.exception.CustomException;
 import com.ex.popply.common.model.BaseTimeEntity;
@@ -110,5 +113,19 @@ public class Event extends BaseTimeEntity {
 		if (this.status == EventStatus.DELETED) throw AlreadyDeletedStatusException.EXCEPTION;
 		this.status = EventStatus.DELETED;
 	}
+
+	public void validateNotOpenStatus() {
+		if (status != EventStatus.OPEN) throw EventNotOpenException.EXCEPTION;
+	}
+
+	public void validateTicketingTime() {
+		if (!isTimeBeforeStartAt()) throw AlreadyOpenStatusException.EXCEPTION;
+	}
+
+	public boolean isTimeBeforeStartAt() {
+		LocalDateTime startDate = LocalDateTime.of(getStartAt(), this.eventInfo.getStartTime());
+		return LocalDateTime.now().isBefore(ChronoLocalDateTime.from(startDate));
+	}
+
 
 }

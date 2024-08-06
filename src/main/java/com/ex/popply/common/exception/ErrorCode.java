@@ -28,7 +28,7 @@ public enum ErrorCode {
     USE_ANOTHER_API(HttpStatus.BAD_REQUEST, "EVENT-008", "잘못된 접근입니다."),
     CANNOT_DELETE_BY_ISSUED_TICKET(HttpStatus.BAD_REQUEST, "EVENT-009", "발급 티켓이 있는 이벤트는 삭제할 수 없습니다."),
     CANNOT_DELETE_BY_OPEN_EVENT(HttpStatus.BAD_REQUEST, "EVENT-010", "오픈 상태인 이벤트는 삭제할 수 없습니다."),
-
+    EVENT_NOT_OPEN(HttpStatus.BAD_REQUEST, "EVENT-011", "이벤트가 오픈상태가 아닙니다."),
 
 //    @ExplainError("주문 및 승인 요청 시 티켓 상품 재고보다 많은 양을 주문 시 발생하는 오류입니다.")
     TICKET_QUANTITY_LESS_THAN_ZERO(HttpStatus.BAD_REQUEST, "TICKET-001", "티켓 재고가 0보다 작을 수 없습니다."),
@@ -41,8 +41,10 @@ public enum ErrorCode {
 //    @ExplainError("이미 재고가 감소되어 티켓상품 삭제가 불가능할 경우 발생하는 오류입니다.")
     FORBIDDEN_TICKET_DELETE(HttpStatus.BAD_REQUEST, "TICKET-005", "티켓상품 삭제가 불가능한 상태입니다."),
 
-    ORDER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ORDER-001", "주문상품을 찾을 수 없습니다.")
-
+    ORDER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ORDER-001", "주문상품을 찾을 수 없습니다."),
+//    @ExplainError("주문 정책을 위반하였을 때 발생하는 오류입니다. 하나의 주문에는 관련된 하나의 이벤트만 담을 수 있음")
+    ORDER_INVALID_ITEM_KIND_POLICY(HttpStatus.BAD_REQUEST, "ORDER-011", "주문 정책을 위반하였습니다."),
+    TICKET_ITEM_PURCHASE_LIMIT(HttpStatus.BAD_REQUEST, "ORDER-002", "해당 티켓의 최대 구매 가능 갯수를 넘었습니다."),
     ;
     private final HttpStatus httpStatus;
     private final String code;

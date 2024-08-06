@@ -1,6 +1,7 @@
 package com.ex.popply.ticket.model;
 
 import com.ex.popply.common.model.BaseTimeEntity;
+import com.ex.popply.order.exception.TicketPurchaseLimitException;
 import com.ex.popply.ticket.exception.ForbiddenTicketDeleteException;
 import com.ex.popply.ticket.exception.InvalidTicketException;
 import com.ex.popply.ticket.exception.TicketQuantityException;
@@ -146,5 +147,17 @@ public class Ticket extends BaseTimeEntity {
         this.ticketStatus = TicketStatus.DELETED;
     }
 
+    public void validPurchaseLimit(Long quantity) {
+        if (isPurchaseLimitExceed(quantity)) {
+            throw TicketPurchaseLimitException.EXCEPTION;
+        }
+    }
+
+    // 최대 구매 수량
+    public Boolean isPurchaseLimitExceed(Long quantity) {
+        System.out.println(purchaseLimit + "  " + quantity);
+        System.out.println(this.purchaseLimit < quantity);
+        return this.purchaseLimit < quantity;
+    }
 
 }

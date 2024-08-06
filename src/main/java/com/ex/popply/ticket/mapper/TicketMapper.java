@@ -23,7 +23,6 @@ public class TicketMapper {
     private final TicketRepository ticketRepository;
 
     public Ticket toTicket(CreateTicketRequest createTicketRequest, Long eventId) {
-
         return Ticket.builder()
                 .eventId(eventId)
                 .name(createTicketRequest.getName())
@@ -39,7 +38,6 @@ public class TicketMapper {
 
     @Transactional(readOnly = true)
     public GetEventTicketResponse toGetEventTicketResponse(Long eventId, Boolean isAdmin) {
-        System.out.println(isAdmin);
         Event event = commonEventService.findById(eventId);
         List<Ticket> tickets = ticketRepository.findAllByEventIdAndTicketStatus(event.getId(), TicketStatus.VALID);
         return GetEventTicketResponse.from(

@@ -3,7 +3,6 @@ package com.ex.popply.order.model;
 import com.ex.popply.common.model.BaseTimeEntity;
 import com.ex.popply.common.vo.OrderItemVo;
 import com.ex.popply.ticket.model.Ticket;
-import com.ex.popply.ticket.model.dto.request.CreateIssuedTicketRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,10 +19,15 @@ public class OrderItem extends BaseTimeEntity {
     @Column(name = "order_item_id")
     private Long id;
 
-    @Embedded private OrderItemVo orderItem;
+    @Embedded
+    private OrderItemVo orderItem;
 
     @Column(nullable = false)
     private Long quantity;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @Builder
     public OrderItem(OrderItemVo orderItemVo, Long quantity) {

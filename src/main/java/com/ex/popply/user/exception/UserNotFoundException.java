@@ -10,4 +10,5 @@ public class UserNotFoundException extends CustomException {
 	private UserNotFoundException() {
 		super(ErrorCode.USER_NOT_FOUND);
 	}
+
 }

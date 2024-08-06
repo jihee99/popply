@@ -1,8 +1,6 @@
 package com.ex.popply.order.model;
 
-import com.ex.popply.event.model.Event;
 import com.ex.popply.order.exception.OrderItemNotFoundException;
-import com.ex.popply.ticket.model.IssuedTicket;
 import com.ex.popply.ticket.model.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -77,7 +75,7 @@ public class Order {
     ) {
         Order order = Order.builder()
                 .userId(userId)
-                .orderItems(getOrderItems(ticket))
+                .orderItems((List<OrderItem>) getOrderItems(ticket))
                 .orderStatus(OrderStatus.PENDING_APPROVE)
                 .eventId(ticket.getEventId())
                 .build();
@@ -99,7 +97,7 @@ public class Order {
     }
 
     @NotNull
-    private static List<OrderItem> getOrderItems(Ticket item) {
+    private static OrderItem getOrderItems(Ticket item) {
         return OrderItem.of(item.getQuantity(), item);
     }
 

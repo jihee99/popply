@@ -3,6 +3,7 @@ package com.ex.popply.event.model.dto.request;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -72,4 +73,16 @@ public class CreateEventInfoRequest {
 	@Positive(message = "시간 당 입장 제한 인원을 입력하세요.")
 	private Long limitPerHour;
 
+	@Builder
+	public CreateEventInfoRequest(String name, Long userId, String description, LocalDate startAt, LocalTime startTime, LocalTime endTime, Long runTime, Long limitPerHour, Long period) {
+		this.name = name;
+		this.userId = userId;
+		this.description = description;
+		this.startAt = startAt;
+		this.period = period;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.runTime = runTime;
+		this.limitPerHour = limitPerHour;
+	}
 }

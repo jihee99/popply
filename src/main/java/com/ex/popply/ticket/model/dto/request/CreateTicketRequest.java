@@ -4,9 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class CreateTicketRequest {
 
     @NotEmpty(message = "티켓상품 이름을 입력해주세요")

@@ -79,6 +79,7 @@ public class Order {
                 .eventId(ticket.getEventId())
                 .build();
 
+        orderItem.setOrder(order);
         orderValidator.validCreate(order);
 //        orderValidator.validApproveStatePurchaseLimit(order);
 

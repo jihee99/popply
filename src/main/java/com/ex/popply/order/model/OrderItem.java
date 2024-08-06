@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "tbl_order_item")
@@ -41,6 +43,10 @@ public class OrderItem extends BaseTimeEntity {
                 .quantity(quantity)
                 .orderItemVo(OrderItemVo.from(ticket))
                 .build();
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Long getItemId() {

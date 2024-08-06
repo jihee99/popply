@@ -41,7 +41,6 @@ public class CreateOrderUseCase {
         Order order = createOrderIssuedTicket(event, issuedTicketRequest, user);
 
         orderRepository.save(order);
-        log.info("{}", order.toString());
         return null;
     }
 

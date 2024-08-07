@@ -81,7 +81,7 @@ public class Order {
 
         orderItem.setOrder(order);
         orderValidator.validCreate(order);
-//        orderValidator.validApproveStatePurchaseLimit(order);
+        orderValidator.validApproveStatePurchaseLimit(order);
 
         return order;
     }

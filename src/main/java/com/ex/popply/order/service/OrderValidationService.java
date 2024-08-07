@@ -8,6 +8,7 @@ import com.ex.popply.event.service.CommonEventService;
 import com.ex.popply.order.exception.*;
 import com.ex.popply.order.model.Order;
 import com.ex.popply.order.model.OrderStatus;
+import com.ex.popply.order.repository.OrderRepository;
 import com.ex.popply.ticket.exception.TicketNotFoundException;
 import com.ex.popply.ticket.model.Ticket;
 import com.ex.popply.ticket.model.TicketStatus;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -29,7 +31,7 @@ public class OrderValidationService {
     private final TicketRepository ticketRepository;
     private final IssuedTicketRepository issuedTicketRepository;
     private final EventRepository eventRepository;
-
+    private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
     /* 주문 생성 가능 여부 */
@@ -137,5 +139,27 @@ public class OrderValidationService {
         }
     }
 
+    public void validApproveStatePurchaseLimit(Order order) {
+        Ticket ticket = getTicket(order);
+        Long userId = order.getUserId();
+        Long ticketId = ticket.getId();
 
+        // 이미 발급된 티켓 개수
+        Long paidTicketCount = issuedTicketRepository.countPaidTickets(userId, ticket.getId());
+
+        // 승인 대기중인 주문들
+        List<Order> approveWaitingOrders = orderRepository.findByTicketIdAndOrderStatusAndUserId(
+                ticketId, OrderStatus.PENDING_APPROVE, userId);
+
+        // 승인 대기중인 티켓 개수
+        Long approveWaitingTicketCount = approveWaitingOrders.stream()
+                .map(Order::getTotalQuantity)
+                .reduce(0L, Long::sum);
+
+        // 주문승인 요청할 티켓 개수
+        Long totalIssuedCount = paidTicketCount + approveWaitingTicketCount + order.getTotalQuantity();
+
+        // 아이템 갯수 리밋을 초과하면
+        ticket.validPurchaseLimit(totalIssuedCount);
+    }
 }

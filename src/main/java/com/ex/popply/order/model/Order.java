@@ -87,9 +87,8 @@ public class Order {
     }
 
     public void approve(Long currentUserId, Order order, OrderValidationService orderValidator) {
-        // 선착순 방식의 0원 결제시
         orderValidator.validCanApproveOrder(order);
-        /*주문상태가 0일때*/
+        orderValidator.validOwner(this, currentUserId);
 //        orderValidator.validCanFreeConfirm(this);
         this.approvedAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.APPROVED;
@@ -112,13 +111,18 @@ public class Order {
     }
 
     public Long getTotalQuantity() {
-        System.out.println("--------------getTotalQuantity--------------");
-        System.out.println("Order Item: " + orderItem.getQuantity());
         return orderItem != null ? orderItem.getQuantity() : 0L;
     }
 
     public Long getDistinctItemId() {
         return orderItem != null ? orderItem.getItemId() : null;
+    }
+
+    /** 주문 상태가 완료될수 있는 상태일 때 주문 종료 이벤트 발생 */
+    private void issueDoneOrderEvent() {
+        if (orderStatus.isCanDone()) {
+//            Events.raise(DoneOrderEvent.from(this));
+        }
     }
 
 }

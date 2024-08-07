@@ -1,11 +1,11 @@
 package com.ex.popply.order.service;
 
+import com.ex.popply.auth.repository.UserRepository;
 import com.ex.popply.event.EventRepository;
 import com.ex.popply.event.exception.EventNotFoundException;
 import com.ex.popply.event.model.Event;
 import com.ex.popply.event.service.CommonEventService;
-import com.ex.popply.order.exception.OrdeItemNotOneTypeException;
-import com.ex.popply.order.exception.OrderItemNotFoundException;
+import com.ex.popply.order.exception.*;
 import com.ex.popply.order.model.Order;
 import com.ex.popply.order.model.OrderStatus;
 import com.ex.popply.ticket.exception.TicketNotFoundException;
@@ -13,12 +13,12 @@ import com.ex.popply.ticket.model.Ticket;
 import com.ex.popply.ticket.model.TicketStatus;
 import com.ex.popply.ticket.repository.IssuedTicketRepository;
 import com.ex.popply.ticket.repository.TicketRepository;
+import com.ex.popply.user.exception.UserNotFoundException;
 import com.ex.popply.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -29,6 +29,8 @@ public class OrderValidationService {
     private final TicketRepository ticketRepository;
     private final IssuedTicketRepository issuedTicketRepository;
     private final EventRepository eventRepository;
+
+    private final UserRepository userRepository;
 
     /* 주문 생성 가능 여부 */
     public void validCreate(Order order) {
@@ -87,9 +89,6 @@ public class OrderValidationService {
     public void validItemPurchaseLimit(Order order, Ticket ticket) {
         Long paidTicketCount = issuedTicketRepository.countPaidTickets(order.getUserId(), ticket.getId());
         Long totalIssuedCount = paidTicketCount + order.getTotalQuantity();
-        System.out.println("------------validItemPurchaseLimit--------------");
-        System.out.println(" paidTicketCount : " + paidTicketCount);
-        System.out.println(" totalIssuedCount : " + totalIssuedCount);
         ticket.validPurchaseLimit(totalIssuedCount);
     }
 
@@ -97,13 +96,20 @@ public class OrderValidationService {
         validStatusCanApprove(getOrderStatus(order));
         validCanDone(order);
         // 유저가 탈퇴를 안했는지 확인.
-//        validUserNotDeleted(order);
+        validUserNotDeleted(order);
     }
 
-    /* 주문 상태가 승인방식의 승인 가능한 상태인지 검증. */
+    /* 주문 상태가 승인 가능한 상태인지 검증. */
     public void validStatusCanApprove(OrderStatus orderStatus) {
         if (!Objects.equals(orderStatus, OrderStatus.PENDING_APPROVE)) {
-//            throw NotPendingOrderException.EXCEPTION;
+            throw NotPendingOrderException.EXCEPTION;
+        }
+    }
+
+    public void validUserNotDeleted(Order order) {
+        User user = userRepository.findById(order.getUserId()).orElseThrow(() -> UserNotFoundException.EXCEPTION);
+        if (user.isDeletedUser()) {
+            throw CanNotApproveDeletedUserOrderException.EXCEPTION;
         }
     }
 
@@ -124,5 +130,12 @@ public class OrderValidationService {
         // 아이템 구매 가능 횟수를 넘지 않는지.
         validItemPurchaseLimit(order, ticket);
     }
+
+    public void validOwner(Order order, Long currentUserId) {
+        if (!order.getUserId().equals(currentUserId)) {
+            throw NotOwnerOrderException.EXCEPTION;
+        }
+    }
+
 
 }

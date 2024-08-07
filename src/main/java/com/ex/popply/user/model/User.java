@@ -78,4 +78,8 @@ public class User extends BaseTimeEntity {
 		}
 		lastLoginAt = LocalDateTime.now();
 	}
+
+	public Boolean isDeletedUser() {
+		return accountState == AccountState.DELETED;
+	}
 }

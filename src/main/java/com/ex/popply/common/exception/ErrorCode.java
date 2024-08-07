@@ -45,6 +45,10 @@ public enum ErrorCode {
 //    @ExplainError("주문 정책을 위반하였을 때 발생하는 오류입니다. 하나의 주문에는 관련된 하나의 이벤트만 담을 수 있음")
     ORDER_INVALID_ITEM_KIND_POLICY(HttpStatus.BAD_REQUEST, "ORDER-011", "주문 정책을 위반하였습니다."),
     TICKET_ITEM_PURCHASE_LIMIT(HttpStatus.BAD_REQUEST, "ORDER-002", "해당 티켓의 최대 구매 가능 갯수를 넘었습니다."),
+    CAN_NOT_DELETED_USER_APPROVE(HttpStatus.BAD_REQUEST, "ORDER-003", "유저가 탈퇴를 했습니다."),
+    ORDER_NOT_MINE(HttpStatus.BAD_REQUEST, "ORDER-004", "본인의 주문이 아닙니다."),
+    ORDER_NOT_PENDING(HttpStatus.BAD_REQUEST, "ORDER-005", "승인 대기중인 주문이 아닙니다."),
+
     ;
     private final HttpStatus httpStatus;
     private final String code;

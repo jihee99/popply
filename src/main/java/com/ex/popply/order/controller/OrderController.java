@@ -25,4 +25,6 @@ public class OrderController {
         return ResponseEntity.ok(createOrderUseCase.execute(createOrderIssuedTicketRequest));
     }
 
+//    @Operation(summary = "사용자의 주문 내역 조회")
+
 }

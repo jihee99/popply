@@ -14,6 +14,9 @@ public class CreateOrderResponse {
     @Schema(description = "UUID")
     private final String orderId;
 
+    @Schema(description = "주문번호")
+    private final String orderNo;
+
     @Schema(description = "고객이메일")
     private final String customerEmail;
 
@@ -24,11 +27,13 @@ public class CreateOrderResponse {
     private final String customerPhoneNumber;
 
 
-    public static CreateOrderResponse from(Order order, Ticket item, User user) {
+    public static CreateOrderResponse from(Order order, User user) {
         return CreateOrderResponse.builder()
                 .customerEmail(user.getEmail())
                 .customerName(user.getName())
+                .customerPhoneNumber(user.getPhoneNumber())
                 .orderId(order.getUuid())
+                .orderNo(order.getOrderNo())
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.ex.popply.order.controller;
 
+import com.ex.popply.order.model.dto.response.CreateOrderResponse;
 import com.ex.popply.order.service.CreateOrderUseCase;
 import com.ex.popply.ticket.model.dto.request.CreateOrderIssuedTicketRequest;
 import com.ex.popply.ticket.model.dto.response.IssuedTicketResponse;
@@ -19,10 +20,9 @@ public class OrderController {
     private final CreateOrderUseCase createOrderUseCase;
 
     @Operation(summary = "해당 이벤트의 티켓을 발급받는 API")
-    @PostMapping("/{eventId}/issue")
-    public ResponseEntity<IssuedTicketResponse> issuedEventTicket(@PathVariable Long eventId, @RequestBody @Valid CreateOrderIssuedTicketRequest createOrderIssuedTicketRequest){
-        createOrderUseCase.execute(createOrderIssuedTicketRequest, eventId);
-        return null;
+    @PostMapping("/issue")
+    public ResponseEntity<CreateOrderResponse> issuedEventTicket(@RequestBody @Valid CreateOrderIssuedTicketRequest createOrderIssuedTicketRequest){
+        return ResponseEntity.ok(createOrderUseCase.execute(createOrderIssuedTicketRequest));
     }
 
 }

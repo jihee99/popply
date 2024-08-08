@@ -146,19 +146,17 @@ public class OrderValidationService {
 
         // 이미 발급된 티켓 개수
         Long paidTicketCount = issuedTicketRepository.countPaidTickets(userId, ticket.getId());
-
         // 승인 대기중인 주문들
         List<Order> approveWaitingOrders = orderRepository.findByTicketIdAndOrderStatusAndUserId(
-                ticketId, OrderStatus.PENDING_APPROVE, userId);
+                ticketId, OrderStatus.APPROVED, userId);
 
-        // 승인 대기중인 티켓 개수
+        // 승인된 티켓 개수
         Long approveWaitingTicketCount = approveWaitingOrders.stream()
                 .map(Order::getTotalQuantity)
                 .reduce(0L, Long::sum);
 
         // 주문승인 요청할 티켓 개수
         Long totalIssuedCount = paidTicketCount + approveWaitingTicketCount + order.getTotalQuantity();
-
         // 아이템 갯수 리밋을 초과하면
         ticket.validPurchaseLimit(totalIssuedCount);
     }

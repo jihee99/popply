@@ -155,8 +155,6 @@ public class Ticket extends BaseTimeEntity {
 
     // 최대 구매 수량
     public Boolean isPurchaseLimitExceed(Long quantity) {
-        System.out.println(purchaseLimit + "  " + quantity);
-        System.out.println(this.purchaseLimit < quantity);
         return this.purchaseLimit < quantity;
     }
 

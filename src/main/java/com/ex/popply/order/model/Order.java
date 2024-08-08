@@ -83,13 +83,14 @@ public class Order {
         orderValidator.validCreate(order);
         orderValidator.validApproveStatePurchaseLimit(order);
 
+        order.approve(userId, order, orderValidator);
+
         return order;
     }
 
     public void approve(Long currentUserId, Order order, OrderValidationService orderValidator) {
         orderValidator.validCanApproveOrder(order);
         orderValidator.validOwner(this, currentUserId);
-//        orderValidator.validCanFreeConfirm(this);
         this.approvedAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.APPROVED;
     }

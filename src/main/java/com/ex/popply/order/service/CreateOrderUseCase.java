@@ -26,7 +26,6 @@ public class CreateOrderUseCase {
 
 //    private final UserUtil userUtils;
     private final UserRepository userRepository;
-    private final CommonEventService commonEventService;
     private final TicketRepository ticketRepository;
     private final OrderRepository orderRepository;
     private final OrderValidationService orderValidationService;
@@ -41,6 +40,7 @@ public class CreateOrderUseCase {
 
         Order order = createOrderIssuedTicket(issuedTicketRequest, user);
         orderRepository.save(order);
+
 
         return CreateOrderResponse.from(order, user);
     }

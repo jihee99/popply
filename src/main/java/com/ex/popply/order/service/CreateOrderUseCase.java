@@ -5,6 +5,7 @@ import com.ex.popply.event.model.Event;
 import com.ex.popply.event.service.CommonEventService;
 import com.ex.popply.order.model.Order;
 import com.ex.popply.order.model.OrderItem;
+import com.ex.popply.order.model.OrderStatus;
 import com.ex.popply.order.model.dto.response.CreateOrderResponse;
 import com.ex.popply.order.repository.OrderRepository;
 import com.ex.popply.ticket.exception.TicketNotFoundException;
@@ -24,16 +25,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateOrderUseCase {
 
-//    private final UserUtil userUtils;
+//    private final UserUtil userUtil;
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
     private final OrderRepository orderRepository;
     private final OrderValidationService orderValidationService;
 
-    public CreateOrderResponse execute(CreateOrderIssuedTicketRequest issuedTicketRequest){
-//        User user = userUtils.getCurrentUser();
+    public CreateOrderResponse execute(CreateOrderIssuedTicketRequest issuedTicketRequest, Long userId){
+//        User user = userUtil.getCurrentUser();
         // 임시
-        User user = userRepository.findById(1L)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
             throw new AuthenticationException("There is no such user : " + 1L) {};
         });
@@ -41,7 +42,11 @@ public class CreateOrderUseCase {
         Order order = createOrderIssuedTicket(issuedTicketRequest, user);
         orderRepository.save(order);
 
+        // 여기서 issued ticket을 업데이트 해야하는가?
 
+        if(order.isApprove()){
+            System.out.println("승인이면 이슈!");
+        }
         return CreateOrderResponse.from(order, user);
     }
 

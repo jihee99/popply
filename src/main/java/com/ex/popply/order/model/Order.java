@@ -112,8 +112,11 @@ public class Order {
     }
 
     public Long getTotalQuantity() {
+        System.out.println(orderItem != null ? orderItem.getQuantity() : 0L);
         return orderItem != null ? orderItem.getQuantity() : 0L;
     }
+
+
 
     public Long getDistinctItemId() {
         return orderItem != null ? orderItem.getItemId() : null;
@@ -126,4 +129,7 @@ public class Order {
         }
     }
 
+    public Boolean isApprove(){
+        return this.orderStatus == OrderStatus.APPROVED;
+    }
 }

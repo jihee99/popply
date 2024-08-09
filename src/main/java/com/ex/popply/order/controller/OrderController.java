@@ -20,9 +20,11 @@ public class OrderController {
     private final CreateOrderUseCase createOrderUseCase;
 
     @Operation(summary = "해당 이벤트의 티켓을 발급받는 API")
-    @PostMapping("/issue")
-    public ResponseEntity<CreateOrderResponse> issuedEventTicket(@RequestBody @Valid CreateOrderIssuedTicketRequest createOrderIssuedTicketRequest){
-        return ResponseEntity.ok(createOrderUseCase.execute(createOrderIssuedTicketRequest));
+    @PostMapping("/issue/{userId}")
+    public ResponseEntity<CreateOrderResponse> issuedEventTicket(
+            @PathVariable Long userId,
+            @RequestBody @Valid CreateOrderIssuedTicketRequest createOrderIssuedTicketRequest){
+        return ResponseEntity.ok(createOrderUseCase.execute(createOrderIssuedTicketRequest, userId));
     }
 
 //    @Operation(summary = "사용자의 주문 내역 조회")
